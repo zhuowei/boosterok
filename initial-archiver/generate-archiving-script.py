@@ -2,7 +2,7 @@ import os
 # mastodon switched to Snowflake between October 4 (when pr merged) and somewhere in November.
 endId = 98982300140635839
 # https://mastodon.social/@esdin/98982300140635839 - what I got when I googled "Nov 10 Mastodon.social"
-startId = 100572926894079104
+startId = 100571995785293420
 
 # we did 458 fetches in 24 min, or 95/min
 # so we can support ~78 workers
