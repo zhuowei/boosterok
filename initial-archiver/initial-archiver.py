@@ -14,7 +14,7 @@ crawl_headers = {"User-Agent" : "BoosterOK/0.0.1 (github.com/zhuowei/boosterok)"
 def getquery(urlstr):
     return dict(parse_qsl(urlparse(urlstr).query))
 
-def main(startid):
+def main(startid, stopId):
     if startid:
         nexturl = ENDPOINT + "?max_id=" + str(startid) + "&limit=40" + target
     else:
@@ -29,6 +29,10 @@ def main(startid):
         with open(outfilename, "wb") as outfile:
             outfile.write(req.content)
         nexturl = links["next"]["url"]
+        if int(getquery(links["next"]["url"])["max_id"]) <= stopId:
+            print("stopped!", links, stopId)
+            input()
+            break
 
 if __name__ == "__main__":
-    main(sys.argv[1] if len(sys.argv) > 1 else None)
+    main(sys.argv[1] if len(sys.argv) > 1 else None, int(sys.argv[2]) if len(sys.argv) > 2 else 0)
