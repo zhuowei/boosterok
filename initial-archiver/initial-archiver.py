@@ -18,6 +18,10 @@ def getquery(urlstr):
 def main(startid, stopId):
     if startid:
         nexturl = ENDPOINT + "?max_id=" + str(startid) + "&limit=40" + target
+        if int(startid) <= stopId:
+            print("not starting - past stop id")
+            input()
+            return
     else:
         nexturl = ENDPOINT + "?limit=40" + target
     while True:
