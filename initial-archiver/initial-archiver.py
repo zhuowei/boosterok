@@ -1,5 +1,6 @@
 import requests
 import sys
+import os
 from urllib.parse import urlparse, parse_qsl
 
 SERVER = "https://mastodon.social"
@@ -33,6 +34,21 @@ def main(startid, stopId):
             print("stopped!", links, stopId)
             input()
             break
+def getstartid():
+    minstart = None
+    for filename in os.listdir("."):
+        if not filename.endswith(".json"):
+            continue
+        newstart = int(filename[:-5].split("_")[2])
+        if minstart == None or newstart < minstart:
+            minstart = newstart
+    if minstart == None:
+        return None
+    return str(minstart)
 
 if __name__ == "__main__":
-    main(sys.argv[1] if len(sys.argv) > 1 else None, int(sys.argv[2]) if len(sys.argv) > 2 else 0)
+    startid = sys.argv[1] if len(sys.argv) > 1 else None
+    newstartid = getstartid()
+    if newstartid != None:
+        startid = newstartid
+    main(startid, int(sys.argv[2]) if len(sys.argv) > 2 else 0)
